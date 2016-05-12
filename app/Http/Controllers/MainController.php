@@ -36,4 +36,22 @@ class MainController extends BaseController {
 			]
 		);
     }
+
+    public function search($string) {
+
+    	$prezis = [];
+
+		foreach ($this->json as $key => $prezi) {
+
+			if (strlen(stristr($prezi->title, $string)) > 0) {
+				$prezis[] = $prezi;
+			}
+		}
+
+		return response()->json([
+				'status' => 'success',
+				'prezis' => json_encode($prezis)
+			]
+		);
+    }
 }
