@@ -38,20 +38,28 @@ class MainController extends BaseController {
     }
 
     public function search($string) {
+    	if(!empty($string)) {
+	    	$prezis = [];
 
-    	$prezis = [];
+			foreach ($this->json as $key => $prezi) {
 
-		foreach ($this->json as $key => $prezi) {
-
-			if (strlen(stristr($prezi->title, $string)) > 0) {
-				$prezis[] = $prezi;
+				if (strlen(stristr($prezi->title, $string)) > 0) {
+					$prezis[] = $prezi;
+				}
 			}
-		}
 
-		return response()->json([
-				'status' => 'success',
-				'prezis' => json_encode($prezis)
-			]
-		);
+			return response()->json([
+					'status' => 'success',
+					'prezis' => json_encode($prezis)
+				]
+			);
+		} 
+		else {
+			return response()->json([
+					'status' => 'warning',
+					'message' => 'no string received'
+				]
+			);
+		}
     }
 }
